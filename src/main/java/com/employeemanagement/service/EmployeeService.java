@@ -133,14 +133,34 @@ public class EmployeeService {
       System.out.println("No employees available.");
       return;
     }
+    printEmployeeTable(employeeList);
+  }
 
-    System.out.println("\n=== Employee List ===");
-    // Header columns
+  // --- Search Employees by Name ---
+  public void searchEmployeesByName(String keyword) {
+    List<Employee> searchResults = new ArrayList<>();
+
+    // Filter employees based on name (Case-Insensitive)
+    for (Employee emp : employeeList) {
+      if (emp.getName().toLowerCase().contains(keyword.toLowerCase())) {
+        searchResults.add(emp);
+      }
+    }
+
+    if (searchResults.isEmpty()) {
+      System.out.println("No employees found matching: " + keyword);
+    } else {
+      System.out.println("\n=== Search Results for '" + keyword + "' ===");
+      printEmployeeTable(searchResults);
+    }
+  }
+
+  // Helper method to print table (Refactored to avoid code duplication)
+  private void printEmployeeTable(List<Employee> listToPrint) {
     System.out.printf("%-10s %-20s %-5s %-12s %-15s %-15s%n", "ID", "Name", "Age", "Salary", "Role", "Department");
     System.out.println("-----------------------------------------------------------------------------------------");
 
-    for (Employee emp : employeeList) {
-      // Null check for relations to prevent crashes
+    for (Employee emp : listToPrint) {
       String roleName = (emp.getRole() != null) ? emp.getRole().getName() : "None";
       String deptName = (emp.getDepartment() != null) ? emp.getDepartment().getName() : "None";
 
