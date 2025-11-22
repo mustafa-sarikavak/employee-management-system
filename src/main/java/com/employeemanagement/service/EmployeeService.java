@@ -156,7 +156,7 @@ public class EmployeeService {
   }
 
   // --- Filter Employees by Role ID ---
-  public void filterEmployeesByRoleId(long roleId) {
+  public List<Employee> filterEmployeesByRoleId(long roleId) {
     List<Employee> filteredList = new ArrayList<>();
 
     for (Employee emp : employeeList) {
@@ -165,17 +165,11 @@ public class EmployeeService {
         filteredList.add(emp);
       }
     }
-
-    if (filteredList.isEmpty()) {
-      System.out.println("No employees found with Role ID: " + roleId);
-    } else {
-      System.out.println("\n=== Employees with Role ID " + roleId + " ===");
-      printEmployeeTable(filteredList);
-    }
+    return filteredList;
   }
 
-  // Helper method to print table (Refactored to avoid code duplication)
-  private void printEmployeeTable(List<Employee> listToPrint) {
+  // Helper method to print table (Changed to public so Main class can use it)
+  public void printEmployeeTable(List<Employee> listToPrint) {
     System.out.printf("%-10s %-20s %-5s %-12s %-15s %-15s%n", "ID", "Name", "Age", "Salary", "Role", "Department");
     System.out.println("-----------------------------------------------------------------------------------------");
 
