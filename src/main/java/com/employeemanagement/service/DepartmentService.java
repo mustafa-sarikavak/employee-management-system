@@ -43,6 +43,19 @@ public class DepartmentService {
     System.out.println("Department updated successfully: " + dept.getName());
   }
 
+  // --- Delete Department ---
+  public void deleteDepartment(long departmentId) {
+    Department dept = getDepartmentById(departmentId);
+
+    if (dept == null) {
+      System.out.println("Error: Department with ID " + departmentId + " not found.");
+      return;
+    }
+
+    departmentList.remove(dept);
+    System.out.println("Department deleted successfully.");
+  }
+
   // Method to get a department by name (Helper for future tasks)
   public Department getDepartmentByName(String name) {
     for (Department dept : departmentList) {
