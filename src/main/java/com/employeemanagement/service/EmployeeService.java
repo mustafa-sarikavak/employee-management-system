@@ -168,6 +168,19 @@ public class EmployeeService {
     return filteredList;
   }
 
+  // --- Filter Employees by Department ID ---
+  public List<Employee> filterEmployeesByDepartmentId(long departmentId) {
+    List<Employee> filteredList = new ArrayList<>();
+
+    for (Employee emp : employeeList) {
+      // Check if department exists and matches the ID
+      if (emp.getDepartment() != null && emp.getDepartment().getDepartmentId() == departmentId) {
+        filteredList.add(emp);
+      }
+    }
+    return filteredList;
+  }
+
   // Helper method to print table (Changed to public so Main class can use it)
   public void printEmployeeTable(List<Employee> listToPrint) {
     System.out.printf("%-10s %-20s %-5s %-12s %-15s %-15s%n", "ID", "Name", "Age", "Salary", "Role", "Department");
