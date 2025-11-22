@@ -32,7 +32,7 @@ public class EmployeeService {
     return true; // Unique
   }
 
-  // --- NEW METHOD: Create Employee using IDs ---
+  // --- Create Employee using IDs ---
   public void createEmployee(String employeeId, String name, int age, double salary,
       LocalDate joiningDate, long departmentId, long roleId) {
 
@@ -66,6 +66,46 @@ public class EmployeeService {
     dept.getEmployees().add(newEmployee);
 
     System.out.println("Employee created successfully: " + newEmployee.getName());
+  }
+
+  // --- NEW METHOD: Update Employee ---
+  public void updateEmployee(String employeeId, String newName, int newAge, double newSalary, long newDeptId, long newRoleId) {
+    // 1. Find the employee
+    Employee emp = getEmployeeById(employeeId);
+    if (emp == null) {
+      System.out.println("Error: Employee with ID " + employeeId + " not found.");
+      return;
+    }
+
+    // 2. Validate new Department and Role
+    Department newDept = departmentService.getDepartmentById(newDeptId);
+    Role newRole = roleService.getRoleById(newRoleId);
+
+    if (newDept == null) {
+      System.out.println("Error: New Department ID " + newDeptId + " not found. Update failed.");
+      return;
+    }
+    if (newRole == null) {
+      System.out.println("Error: New Role ID " + newRoleId + " not found. Update failed.");
+      return;
+    }
+
+    // 3. Handle Department Transfer (If department changed)
+    Department oldDept = emp.getDepartment();
+    if (oldDept.getDepartmentId() != newDeptId) {
+      oldDept.getEmployees().remove(emp); // Remove from old department list
+      newDept.getEmployees().add(emp);    // Add to new department list
+      emp.setDepartment(newDept);         // Update employee's reference
+      System.out.println("Department updated for employee: " + emp.getName());
+    }
+
+    // 4. Update other details
+    emp.setName(newName);
+    emp.setAge(newAge);
+    emp.setSalary(newSalary);
+    emp.setRole(newRole);
+
+    System.out.println("Employee details updated successfully.");
   }
 
   // Getter for the list
