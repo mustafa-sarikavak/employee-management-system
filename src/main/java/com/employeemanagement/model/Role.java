@@ -3,18 +3,23 @@ package com.employeemanagement.model;
 import java.io.Serializable;
 
 public class Role implements Serializable {
-  // Serialization version ID
   private static final long serialVersionUID = 1L;
 
   private long roleId;
   private String name;
-  private double salaryFactor;
+  private String level;        // Junior, Mid, Senior etc.
+  private Department department; // Association with Department class
 
-  // Constructor
-  public Role(long roleId, String name, double salaryFactor) {
+  // Empty Constructor (Good for serialization/future frameworks)
+  public Role() {
+  }
+
+  // Parameterized Constructor
+  public Role(long roleId, String name, String level, Department department) {
     this.roleId = roleId;
     this.name = name;
-    this.salaryFactor = salaryFactor;
+    this.level = level;
+    this.department = department;
   }
 
   // Getters and Setters
@@ -34,17 +39,29 @@ public class Role implements Serializable {
     this.name = name;
   }
 
-  public double getSalaryFactor() {
-    return salaryFactor;
+  public String getLevel() {
+    return level;
   }
 
-  public void setSalaryFactor(double salaryFactor) {
-    this.salaryFactor = salaryFactor;
+  public void setLevel(String level) {
+    this.level = level;
   }
 
-  // toString method for easy printing
+  public Department getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(Department department) {
+    this.department = department;
+  }
+
   @Override
   public String toString() {
-    return "Role{id=" + roleId + ", name='" + name + "', factor=" + salaryFactor + "}";
+    return "Role{" +
+        "id=" + roleId +
+        ", name='" + name + '\'' +
+        ", level='" + level + '\'' +
+        ", department=" + (department != null ? department.getName() : "None") +
+        '}';
   }
 }
