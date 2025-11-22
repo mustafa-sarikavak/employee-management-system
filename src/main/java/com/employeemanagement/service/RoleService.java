@@ -51,6 +51,19 @@ public class RoleService {
     System.out.println("Role updated successfully: " + role.getName());
   }
 
+  // --- NEW METHOD: Delete Role ---
+  public void deleteRole(long roleId) {
+    Role role = getRoleById(roleId);
+
+    if (role == null) {
+      System.out.println("Error: Role with ID " + roleId + " not found.");
+      return;
+    }
+
+    roleList.remove(role);
+    System.out.println("Role deleted successfully.");
+  }
+
   // Getter for the list
   public List<Role> getAllRoles() {
     return roleList;
