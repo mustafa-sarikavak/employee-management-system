@@ -33,6 +33,24 @@ public class RoleService {
     System.out.println("Role created successfully: " + newRole.getName());
   }
 
+  // --- Method to Update Role ---
+  public void updateRole(long roleId, String newName, String newLevel, Department newDepartment) {
+    // Step 1: Find the role
+    Role role = getRoleById(roleId);
+
+    // Step 2: Check if it exists
+    if (role == null) {
+      System.out.println("Error: Role with ID " + roleId + " not found.");
+      return;
+    }
+
+    // Step 3: Update details
+    role.setName(newName);
+    role.setLevel(newLevel);
+    role.setDepartment(newDepartment);
+    System.out.println("Role updated successfully: " + role.getName());
+  }
+
   // Getter for the list
   public List<Role> getAllRoles() {
     return roleList;
