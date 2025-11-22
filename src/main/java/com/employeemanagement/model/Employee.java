@@ -6,23 +6,28 @@ import java.time.LocalDate;
 public class Employee implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  private String employeeId;   // Changed from long to String (e.g., "E001")
+  private String employeeId;
   private String name;
   private int age;
-  private double salary;       // New attribute
+  private double salary;
   private LocalDate joiningDate;
 
-  // Empty Constructor
+  // New Relationships
+  private Role role;             // Association: Employee has a Role
+  private Department department; // Association: Employee belongs to a Department
+
   public Employee() {
   }
 
-  // Parameterized Constructor
-  public Employee(String employeeId, String name, int age, double salary, LocalDate joiningDate) {
+  // Updated Constructor with Role and Department
+  public Employee(String employeeId, String name, int age, double salary, LocalDate joiningDate, Role role, Department department) {
     this.employeeId = employeeId;
     this.name = name;
     this.age = age;
     this.salary = salary;
     this.joiningDate = joiningDate;
+    this.role = role;
+    this.department = department;
   }
 
   // Getters and Setters
@@ -66,14 +71,29 @@ public class Employee implements Serializable {
     this.joiningDate = joiningDate;
   }
 
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
+  }
+
+  public Department getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(Department department) {
+    this.department = department;
+  }
+
   @Override
   public String toString() {
     return "Employee{" +
         "id='" + employeeId + '\'' +
         ", name='" + name + '\'' +
-        ", age=" + age +
-        ", salary=" + salary +
-        ", joined=" + joiningDate +
+        ", role=" + (role != null ? role.getName() : "None") +
+        ", department=" + (department != null ? department.getName() : "None") +
         '}';
   }
 }
