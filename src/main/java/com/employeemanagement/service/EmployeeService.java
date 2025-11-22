@@ -181,24 +181,30 @@ public class EmployeeService {
     return filteredList;
   }
 
-  // Helper method to print table (Changed to public so Main class can use it)
+  // Helper method to print table (Updated to show Role Level)
   public void printEmployeeTable(List<Employee> listToPrint) {
-    System.out.printf("%-10s %-20s %-5s %-12s %-15s %-15s%n", "ID", "Name", "Age", "Salary", "Role", "Department");
-    System.out.println("-----------------------------------------------------------------------------------------");
+    // Role column width increased from 15 to 25 to fit "Name (Level)"
+    System.out.printf("%-10s %-20s %-5s %-12s %-25s %-15s%n", "ID", "Name", "Age", "Salary", "Role", "Department");
+    System.out.println("----------------------------------------------------------------------------------------------------");
 
     for (Employee emp : listToPrint) {
-      String roleName = (emp.getRole() != null) ? emp.getRole().getName() : "None";
+      String roleDetails = "None";
+      if (emp.getRole() != null) {
+        // Format: "Manager (Senior)" or "Developer (Mid)"
+        roleDetails = emp.getRole().getName() + " (" + emp.getRole().getLevel() + ")";
+      }
+
       String deptName = (emp.getDepartment() != null) ? emp.getDepartment().getName() : "None";
 
-      System.out.printf("%-10s %-20s %-5d %-12.2f %-15s %-15s%n",
+      System.out.printf("%-10s %-20s %-5d %-12.2f %-25s %-15s%n",
           emp.getEmployeeId(),
           emp.getName(),
           emp.getAge(),
           emp.getSalary(),
-          roleName,
+          roleDetails, // Now shows Name + Level
           deptName);
     }
-    System.out.println("-----------------------------------------------------------------------------------------");
+    System.out.println("----------------------------------------------------------------------------------------------------");
   }
 
   // Getter for the list
