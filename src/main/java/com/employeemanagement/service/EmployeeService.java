@@ -127,6 +127,34 @@ public class EmployeeService {
     System.out.println("Employee deleted successfully.");
   }
 
+  // --- List All Employees Formatted ---
+  public void listAllEmployees() {
+    if (employeeList.isEmpty()) {
+      System.out.println("No employees available.");
+      return;
+    }
+
+    System.out.println("\n=== Employee List ===");
+    // Header columns
+    System.out.printf("%-10s %-20s %-5s %-12s %-15s %-15s%n", "ID", "Name", "Age", "Salary", "Role", "Department");
+    System.out.println("-----------------------------------------------------------------------------------------");
+
+    for (Employee emp : employeeList) {
+      // Null check for relations to prevent crashes
+      String roleName = (emp.getRole() != null) ? emp.getRole().getName() : "None";
+      String deptName = (emp.getDepartment() != null) ? emp.getDepartment().getName() : "None";
+
+      System.out.printf("%-10s %-20s %-5d %-12.2f %-15s %-15s%n",
+          emp.getEmployeeId(),
+          emp.getName(),
+          emp.getAge(),
+          emp.getSalary(),
+          roleName,
+          deptName);
+    }
+    System.out.println("-----------------------------------------------------------------------------------------");
+  }
+
   // Getter for the list
   public List<Employee> getAllEmployees() {
     return employeeList;
