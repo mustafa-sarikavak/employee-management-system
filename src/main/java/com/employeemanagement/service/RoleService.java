@@ -51,7 +51,7 @@ public class RoleService {
     System.out.println("Role updated successfully: " + role.getName());
   }
 
-  // --- NEW METHOD: Delete Role ---
+  // --- Delete Role ---
   public void deleteRole(long roleId) {
     Role role = getRoleById(roleId);
 
@@ -62,6 +62,29 @@ public class RoleService {
 
     roleList.remove(role);
     System.out.println("Role deleted successfully.");
+  }
+
+  // --- List All Roles Formatted ---
+  public void listAllRoles() {
+    if (roleList.isEmpty()) {
+      System.out.println("No roles available.");
+      return;
+    }
+
+    System.out.println("\n=== Role List ===");
+    // Header: ID (5), Name (20), Level (10), Dept (20)
+    System.out.printf("%-5s %-20s %-15s %-20s%n", "ID", "Name", "Level", "Department");
+    System.out.println("----------------------------------------------------------------");
+
+    for (Role role : roleList) {
+      String deptName = (role.getDepartment() != null) ? role.getDepartment().getName() : "None";
+      System.out.printf("%-5d %-20s %-15s %-20s%n",
+          role.getRoleId(),
+          role.getName(),
+          role.getLevel(),
+          deptName);
+    }
+    System.out.println("----------------------------------------------------------------");
   }
 
   // Getter for the list
