@@ -68,7 +68,7 @@ public class EmployeeService {
     System.out.println("Employee created successfully: " + newEmployee.getName());
   }
 
-  // --- NEW METHOD: Update Employee ---
+  // --- Update Employee ---
   public void updateEmployee(String employeeId, String newName, int newAge, double newSalary, long newDeptId, long newRoleId) {
     // 1. Find the employee
     Employee emp = getEmployeeById(employeeId);
@@ -106,6 +106,25 @@ public class EmployeeService {
     emp.setRole(newRole);
 
     System.out.println("Employee details updated successfully.");
+  }
+
+  // --- Delete Employee ---
+  public void deleteEmployee(String employeeId) {
+    Employee emp = getEmployeeById(employeeId);
+
+    if (emp == null) {
+      System.out.println("Error: Employee with ID " + employeeId + " not found.");
+      return;
+    }
+
+    // 1. Remove from Department's list first (Maintain Relationship)
+    if (emp.getDepartment() != null) {
+      emp.getDepartment().getEmployees().remove(emp);
+    }
+
+    // 2. Remove from main Employee list
+    employeeList.remove(emp);
+    System.out.println("Employee deleted successfully.");
   }
 
   // Getter for the list
