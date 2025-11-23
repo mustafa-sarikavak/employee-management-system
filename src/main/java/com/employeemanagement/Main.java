@@ -47,6 +47,7 @@ public class Main {
       System.out.println("13. Search Employee by Name");
       System.out.println("14. Filter Employees by Role ID");
       System.out.println("15. Filter Employees by Dept ID");
+      System.out.println("16. Sort Employees by Name");
       System.out.println("0. Exit");
       System.out.print("Enter your choice: ");
 
@@ -192,6 +193,12 @@ public class Main {
           long filterDeptId = scanner.nextLong();
           List<Employee> deptResults = employeeService.filterEmployeesByDepartmentId(filterDeptId);
           employeeService.printEmployeeTable(deptResults);
+          break;
+
+        case 16: // Sort Employees
+          System.out.print("Enter sort order (asc/desc): ");
+          String sortOrder = scanner.nextLine();
+          employeeService.sortEmployeesByName(sortOrder);
           break;
 
         case 0:

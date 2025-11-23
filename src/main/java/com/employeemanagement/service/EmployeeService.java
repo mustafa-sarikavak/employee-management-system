@@ -7,6 +7,8 @@ import com.employeemanagement.model.Role;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class EmployeeService {
   // In-memory list to store employees
@@ -179,6 +181,26 @@ public class EmployeeService {
       }
     }
     return filteredList;
+  }
+
+  // --- Sort Employees by Name ---
+  public void sortEmployeesByName(String order) {
+    // Create a copy of the list to avoid modifying the original data order
+    List<Employee> sortedList = new ArrayList<>(employeeList);
+
+    if (order.equalsIgnoreCase("asc")) {
+      // Sort A to Z (Case Insensitive)
+      sortedList.sort(Comparator.comparing(Employee::getName, String.CASE_INSENSITIVE_ORDER));
+    } else if (order.equalsIgnoreCase("desc")) {
+      // Sort Z to A (Case Insensitive)
+      sortedList.sort(Comparator.comparing(Employee::getName, String.CASE_INSENSITIVE_ORDER).reversed());
+    } else {
+      System.out.println("Invalid sort order. Please use 'asc' or 'desc'.");
+      return;
+    }
+
+    System.out.println("\n=== Sorted Employees (" + order.toUpperCase() + ") ===");
+    printEmployeeTable(sortedList);
   }
 
   // Helper method to print table (Updated to show Role Level)
