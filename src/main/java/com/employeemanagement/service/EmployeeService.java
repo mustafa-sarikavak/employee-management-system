@@ -14,6 +14,9 @@ public class EmployeeService {
   // In-memory list to store employees
   private List<Employee> employeeList = new ArrayList<>();
 
+  // Base Hourly Rate
+  private static final double BASE_HOURLY_RATE = 100.0;
+
   // Dependencies to fetch Department and Role objects
   private DepartmentService departmentService;
   private RoleService roleService;
@@ -242,5 +245,36 @@ public class EmployeeService {
       }
     }
     return null;
+  }
+
+  // --- Calculate Salary ---
+  public void calculateSalary(String employeeId, double hoursWorked) {
+    // 1. Find Employee
+    Employee emp = getEmployeeById(employeeId);
+
+    if (emp == null) {
+      System.out.println("Error: Employee not found with ID: " + employeeId);
+      return;
+    }
+
+    // 2. Get Factors (Safe check for nulls)
+    double roleFactor = (emp.getRole() != null) ? emp.getRole().getSalaryFactor() : 1.0;
+    double deptFactor = (emp.getDepartment() != null) ? emp.getDepartment().getSalaryFactor() : 1.0;
+
+    // 3. Compute Salary
+    // Formula: Base * Hours * RoleFactor * DeptFactor
+    double totalSalary = BASE_HOURLY_RATE * hoursWorked * roleFactor * deptFactor;
+
+    // 4. Print Result
+    System.out.println("\n=== Salary Calculation Detail ===");
+    System.out.printf("%-10s %-10s %-12s %-12s %-15s%n", "Emp ID", "Hours", "Role Fac.", "Dept Fac.", "Total Salary");
+    System.out.println("-----------------------------------------------------------------");
+    System.out.printf("%-10s %-10.1f %-12.2f %-12.2f %-15.2f%n",
+        emp.getEmployeeId(),
+        hoursWorked,
+        roleFactor,
+        deptFactor,
+        totalSalary);
+    System.out.println("-----------------------------------------------------------------");
   }
 }
