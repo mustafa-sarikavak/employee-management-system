@@ -8,6 +8,7 @@ public class Role implements Serializable {
   private long roleId;
   private String name;
   private String level;        // Junior, Mid, Senior etc.
+  private double salaryFactor;
   private Department department; // Association with Department class
 
   // Empty Constructor (Good for serialization/future frameworks)
@@ -15,10 +16,11 @@ public class Role implements Serializable {
   }
 
   // Parameterized Constructor
-  public Role(long roleId, String name, String level, Department department) {
+  public Role(long roleId, String name, String level, double salaryFactor, Department department) {
     this.roleId = roleId;
     this.name = name;
     this.level = level;
+    this.salaryFactor = salaryFactor;
     this.department = department;
   }
 
@@ -47,6 +49,14 @@ public class Role implements Serializable {
     this.level = level;
   }
 
+  public double getSalaryFactor() {
+    return salaryFactor;
+  } // --- NEW GETTER ---
+
+  public void setSalaryFactor(double salaryFactor) {
+    this.salaryFactor = salaryFactor;
+  }
+
   public Department getDepartment() {
     return department;
   }
@@ -61,6 +71,7 @@ public class Role implements Serializable {
         "id=" + roleId +
         ", name='" + name + '\'' +
         ", level='" + level + '\'' +
+        ", salaryFactor=" + salaryFactor +
         ", department=" + (department != null ? department.getName() : "None") +
         '}';
   }

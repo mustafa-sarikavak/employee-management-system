@@ -20,7 +20,7 @@ public class RoleService {
   }
 
   // Method to create and add a new role
-  public void createRole(long roleId, String name, String level, Department department) {
+  public void createRole(long roleId, String name, String level, double salaryFactor, Department department) {
     // Check if roleId is unique
     if (getRoleById(roleId) != null) {
       System.out.println("Error: Role with ID " + roleId + " already exists. Operation failed.");
@@ -28,13 +28,13 @@ public class RoleService {
     }
 
     // If unique, create and add
-    Role newRole = new Role(roleId, name, level, department);
+    Role newRole = new Role(roleId, name, level, salaryFactor, department);
     roleList.add(newRole);
     System.out.println("Role created successfully: " + newRole.getName());
   }
 
   // --- Method to Update Role ---
-  public void updateRole(long roleId, String newName, String newLevel, Department newDepartment) {
+  public void updateRole(long roleId, String newName, String newLevel, double newSalaryFactor, Department newDepartment) {
     // Step 1: Find the role
     Role role = getRoleById(roleId);
 
@@ -47,6 +47,7 @@ public class RoleService {
     // Step 3: Update details
     role.setName(newName);
     role.setLevel(newLevel);
+    role.setSalaryFactor(newSalaryFactor);
     role.setDepartment(newDepartment);
     System.out.println("Role updated successfully: " + role.getName());
   }
@@ -72,19 +73,20 @@ public class RoleService {
     }
 
     System.out.println("\n=== Role List ===");
-    // Header: ID (5), Name (20), Level (10), Dept (20)
-    System.out.printf("%-5s %-20s %-15s %-20s%n", "ID", "Name", "Level", "Department");
-    System.out.println("----------------------------------------------------------------");
+    // Header: ID (5), Name (20), Level (15), Factor (10), Dept (20)
+    System.out.printf("%-5s %-20s %-15s %-10s %-20s%n", "ID", "Name", "Level", "Factor", "Department");
+    System.out.println("---------------------------------------------------------------------------");
 
     for (Role role : roleList) {
       String deptName = (role.getDepartment() != null) ? role.getDepartment().getName() : "None";
-      System.out.printf("%-5d %-20s %-15s %-20s%n",
+      System.out.printf("%-5d %-20s %-15s %-10.2f %-20s%n",
           role.getRoleId(),
           role.getName(),
           role.getLevel(),
+          role.getSalaryFactor(),
           deptName);
     }
-    System.out.println("----------------------------------------------------------------");
+    System.out.println("---------------------------------------------------------------------------");
   }
 
   // Getter for the list

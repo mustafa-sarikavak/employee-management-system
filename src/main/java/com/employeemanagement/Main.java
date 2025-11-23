@@ -24,8 +24,8 @@ public class Main {
     // 2. Pre-populate some data for testing (Optional, but helpful)
     departmentService.createDepartment("IT", 1.5);
     departmentService.createDepartment("HR", 1.2);
-    roleService.createRole(1, "Developer", "Mid", departmentService.getDepartmentById(1));
-    roleService.createRole(2, "Manager", "Senior", departmentService.getDepartmentById(2));
+    roleService.createRole(1, "Developer", "Mid", 1.5, departmentService.getDepartmentById(1));
+    roleService.createRole(2, "Manager", "Senior", 2.0, departmentService.getDepartmentById(2));
 
     while (running) {
       System.out.println("\n=== EMPLOYEE MANAGEMENT SYSTEM ===");
@@ -92,10 +92,12 @@ public class Main {
           String roleName = scanner.nextLine();
           System.out.print("Enter Role Level: ");
           String roleLevel = scanner.nextLine();
+          System.out.print("Enter Salary Factor (e.g. 1.5): ");
+          double roleFactor = scanner.nextDouble();
           System.out.print("Enter Department ID for this Role: ");
           long roleDeptId = scanner.nextLong();
           // Fetch dept object to pass
-          roleService.createRole(roleId, roleName, roleLevel, departmentService.getDepartmentById(roleDeptId));
+          roleService.createRole(roleId, roleName, roleLevel, roleFactor, departmentService.getDepartmentById(roleDeptId));
           break;
 
         case 6: // List Roles
@@ -110,9 +112,11 @@ public class Main {
           String newRoleName = scanner.nextLine();
           System.out.print("Enter New Level: ");
           String newRoleLevel = scanner.nextLine();
+          System.out.print("Enter New Salary Factor: ");
+          double newRoleFactor = scanner.nextDouble();
           System.out.print("Enter New Department ID: ");
           long newRoleDeptId = scanner.nextLong();
-          roleService.updateRole(updateRoleId, newRoleName, newRoleLevel, departmentService.getDepartmentById(newRoleDeptId));
+          roleService.updateRole(updateRoleId, newRoleName, newRoleLevel, newRoleFactor, departmentService.getDepartmentById(newRoleDeptId));
           break;
 
         case 8: // Delete Role
